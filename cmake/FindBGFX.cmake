@@ -22,11 +22,19 @@ find_path(BGFX_INCLUDE_DIR
     ${FIND_EXTRA_FLAG}
 )
 
-find_library(BGFX_LIBRARY_RELEASE bgfxRelease PATHS ${BGFX_ROOT_DIR}/lib ${FIND_EXTRA_FLAG})
-find_library(BGFX_LIBRARY_DEBUG	bgfxDebug PATHS ${BGFX_ROOT_DIR}/lib ${FIND_EXTRA_FLAG})
+if (MSVC)
+	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+		set(BGFX_BUILT_DIR ${BGFX_ROOT_DIR}/.build/win64_vs2015/bin CACHE PATH "BGFX built binaries directory")
+	else()
+		set(BGFX_BUILT_DIR ${BGFX_ROOT_DIR}/.build/win32_vs2015/bin CACHE PATH "BGFX built binaries directory")
+	endif()
+endif()
 
-find_library(BGFX_COMMON_LIBRARY_RELEASE bgfxRelease PATHS ${BGFX_ROOT_DIR}/lib ${FIND_EXTRA_FLAG})
-find_library(BGFX_COMMON_LIBRARY_DEBUG	bgfxDebug PATHS ${BGFX_ROOT_DIR}/lib ${FIND_EXTRA_FLAG})
+find_library(BGFX_LIBRARY_RELEASE bgfxRelease PATHS ${BGFX_BUILT_DIR} ${FIND_EXTRA_FLAG})
+find_library(BGFX_LIBRARY_DEBUG	bgfxDebug PATHS ${BGFX_BUILT_DIR} ${FIND_EXTRA_FLAG})
+
+find_library(BGFX_COMMON_LIBRARY_RELEASE bgfxRelease PATHS ${BGFX_BUILT_DIR} ${FIND_EXTRA_FLAG})
+find_library(BGFX_COMMON_LIBRARY_DEBUG	bgfxDebug PATHS ${BGFX_BUILT_DIR} ${FIND_EXTRA_FLAG})
 
 set(BGFX_LIBRARY 
 	optimized 	${BGFX_LIBRARY_RELEASE}

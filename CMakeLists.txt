@@ -40,7 +40,6 @@ endif()
 set(DEBUG_COMPILE_OPTIONS "-DBX_CONFIG_ALLOCATOR_DEBUG")
 add_compile_options("$<$<CONFIG:Debug>:${DEBUG_COMPILE_OPTIONS}>")
 
-link_directories()
 # Add an executable with the above sources
 add_executable(hello_bgfx ${PROJECT_SOURCES})
 
