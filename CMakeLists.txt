@@ -11,6 +11,8 @@ project (hello_bgfx)
 
 include(FindBX)
 include(FindBGFX)
+include(FindBIMG)
+include(BGFX)
 
 # List project sources
 file(GLOB PROJECT_SOURCES src/*.cpp)
@@ -47,6 +49,7 @@ add_executable(hello_bgfx ${PROJECT_SOURCES})
 # when running g++ these will be included as -I/directory/path/
 target_include_directories(hello_bgfx
     PRIVATE ${PROJECT_SOURCE_DIR}/inc
+	PRIVATE ${BIMG_INCLUDE_DIR}
     PRIVATE ${BX_INCLUDE_DIR}/compat/msvc
     PRIVATE ${BX_INCLUDE_DIR}
     PRIVATE ${BGFX_INCLUDE_DIR}
@@ -54,5 +57,9 @@ target_include_directories(hello_bgfx
     PRIVATE ${BGFX_ROOT_DIR}/examples/common
 )
 
+target_link_libraries(hello_bgfx PRIVATE ${BIMG_LIBRARY})
+target_link_libraries(hello_bgfx PRIVATE ${BIMG_ENCODE_LIBRARY})
+target_link_libraries(hello_bgfx PRIVATE ${BIMG_DECODE_LIBRARY})
+target_link_libraries(hello_bgfx PRIVATE ${BX_LIBRARY})
 target_link_libraries(hello_bgfx PRIVATE ${BGFX_COMMON_LIBRARY})
 target_link_libraries(hello_bgfx PRIVATE ${BGFX_LIBRARY})
